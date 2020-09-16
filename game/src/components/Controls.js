@@ -1,32 +1,32 @@
 import React from "react";
 
 export default function Controls({
-  stepThroughAutomata,
-  setClickable,
-  clickable,
-  speedInput,
-  setSpeedInput
+stepThroughAutomata,
+setClickable,
+clickable,
+speedInput,
+setSpeedInput
 }) {
-  return (
+return (
     <div className="controls">
-      <h1>Controls:</h1>
-      <button
+    <h1>Controls:</h1>
+    <button
         onClick={e => {
-          e.preventDefault();
-          stepThroughAutomata();
+        e.preventDefault();
+        stepThroughAutomata();
         }}
-      >
+    >
         Step 1 Generation
-      </button>
+    </button>
 
-      <input
+    <input
         placeholder="Enter speed in milliseconds"
         value={speedInput}
         onChange={e => setSpeedInput(e.target.value)}
-      />
-      <button onClick={() => setClickable(prevState => !prevState)}>
+    />
+    <button onClick={() => setClickable(prevState => !prevState)}>
         {clickable ? "Start" : "Stop"}
-      </button>
+    </button>
     </div>
-  );
+);
 }

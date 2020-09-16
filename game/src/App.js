@@ -2,10 +2,11 @@ import React from "react";
 import GridContainer from "./components/GridContainer";
 import RulesContainer from "./components/RulesContainer";
 import Title from "./components/Title";
+import './App.css';
 
 function App() {
   return (
-    <div className="app_container">
+    <div className="App-header">
       <Title />
       <div className="mid_section_container">
         <GridContainer />

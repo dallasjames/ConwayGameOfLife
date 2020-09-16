@@ -70,9 +70,4 @@ export default React.memo(
       </div>
     );
   },
-  // (prevProps, newProps) =>
-  //   prevProps.setDefaultGrid === newProps.setDefaultGrid &&
-  //   prevProps.createRandomGrid === newProps.createRandomGrid &&
-  //   prevProps.setGridSize === newProps.setGridSize &&
-  //   prevProps.clickable === newProps.clickable
 );
