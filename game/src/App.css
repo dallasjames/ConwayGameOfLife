@@ -26,3 +26,31 @@ body {
 .colors form {
     margin: auto 2rem auto 2rem;
 }
+
+.ui.tabular.menu {
+    display: flex;
+    flex-direction: row;
+}
+
+.ui.tabular.menu .item {
+    color: white;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 2px solid transparent;
+    padding: .92857143em 1.42857143em;
+  }
+  
+  .ui.tabular.menu .active.item {
+    color: white;
+    border-top-width: 1px;
+    border-color: white;
+    font-weight: 700;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: .28571429rem .28571429rem .28571429rem .28571429rem!important;
+  }
+
+  .about {
+      width: 65%;
+  }

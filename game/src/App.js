@@ -1,10 +1,10 @@
 import React from "react";
-import Grid from "./Grid";
 import "./App.css"
+import Nav from "./Nav";
 
 function App() {
 return (
-    <Grid />
+    <Nav />
 )
 }
 
