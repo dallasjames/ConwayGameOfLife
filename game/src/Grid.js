@@ -37,7 +37,9 @@ function Grid() {
 
     const [generation, setGeneration] = useState(0)
 
-    const newGen = 0
+    const [colorLiving, setColorLiving] = useState('black')
+
+    const [colorDead, setColorDead] = useState('white')
 
     const runSim = () => {
         if (!runningRef.current) {
@@ -80,7 +82,6 @@ function Grid() {
                             const newJ = j + y
                             if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
                                 neighbors += g[newI][newJ]
-                                setGeneration(generation + 1)
                             }
                         })
                     if (neighbors < 2 || neighbors > 3) {
@@ -92,6 +93,15 @@ function Grid() {
                 }
             })
         })
+        setGeneration(prevGen => prevGen + 1)
+    }
+
+    const handleChangeL = (e) => {
+        setColorLiving(e.target.value)
+    }
+
+    const handleChangeD = (e) => {
+        setColorDead(e.target.value)
     }
 
 return (
@@ -168,6 +178,32 @@ return (
             }}
             >JSX Fragment</button>
         </div>
+        <div className="colors">
+            <form onSubmit={(e) => setColorLiving(e.value)}>
+                <label>
+                    Set Living Cell Color 
+                    <select onChange={handleChangeL}>
+                        <option value='black'>Black</option>
+                        <option value='white'>White</option>
+                        <option value='yellow'>Yellow</option>
+                        <option value='green'>Green</option>
+                        <option value='blue'>Blue</option>
+                    </select>
+                </label>
+            </form>
+            <form onSubmit={(e) => setColorDead(e.value)}>
+                <label>
+                    Set Dead Cell Color 
+                    <select onChange={handleChangeD}>
+                        <option ty value='white'>White</option>
+                        <option value='black'>Black</option>
+                        <option value='yellow'>Yellow</option>
+                        <option value='green'>Green</option>
+                        <option value='blue'>Blue</option>
+                    </select>
+                </label>
+            </form>
+        </div>
         <div style={{
             display: `grid`,
             gridTemplateColumns: `repeat(${numCols}, 20px)`
@@ -186,8 +222,8 @@ return (
                 }}
                 style={{
                     width: 20,
-                    height: 20, backgroundColor: grid[i][j] ? `black` : `white`,
-                    // border: grid[i][j] ? `solid .01px white` : `solid .01px black`
+                    height: 20, backgroundColor: grid[i][j] ? `${colorLiving}` : `${colorDead}`,
+                    border: grid[i][j] ? `solid .01px ${colorDead}` : `solid .01px ${colorLiving}`
                 }}
                 />
                 ))

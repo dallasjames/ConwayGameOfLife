@@ -16,3 +16,13 @@ body {
     background-color: black;
     color: white;
 }
+
+.colors {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+}
+
+.colors form {
+    margin: auto 2rem auto 2rem;
+}
