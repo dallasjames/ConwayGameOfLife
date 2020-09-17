@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import produce from "immer";
 import { SampleGrid1, SampleGrid2, SampleGrid3 } from "./templates"
 import './App.css';
@@ -32,12 +32,12 @@ function Grid() {
 
     const [running, setRunning] = useState(false)
 
-    const [speed, setSpeed] = useState(100)
-
     const runningRef = useRef()
     runningRef.current = running
 
-    const runSim = useCallback(() => {
+    const [generation, setGeneration] = useState(0)
+
+    const runSim = () => {
         if (!runningRef.current) {
             return
         }
@@ -51,6 +51,35 @@ function Grid() {
                             const newJ = j + y
                             if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
                                 neighbors += g[newI][newJ]
+                                setGeneration(generation + 1)
+                            }
+                        })
+                        if (neighbors < 2 || neighbors > 3) {
+                            gridCopy[i][j] = 0
+                        } else if (g[i][j] === 0 && neighbors === 3) {
+                            gridCopy[i][j] = 1
+                        }
+                    }
+                }
+            })
+        })
+        setTimeout(runSim, 500)
+        setTimeout(() => {setGeneration(generation + 1)}, 500)
+    }
+
+    console.log(generation)
+    const Stepper = () => {
+        setGrid((g) => {
+            return produce(g, gridCopy => {
+                for (let i = 0; i < numRows; i++) {
+                    for (let j = 0; j < numCols; j++) {
+                        let neighbors = 0
+                        ops.forEach(([x, y]) => {
+                            const newI = i + x
+                            const newJ = j + y
+                            if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
+                                neighbors += g[newI][newJ]
+                                setGeneration(generation + 1)
                             }
                         })
                     if (neighbors < 2 || neighbors > 3) {
@@ -62,22 +91,11 @@ function Grid() {
                 }
             })
         })
-
-        setTimeout(runSim, speed)
-        
-    }, [speed])
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSpeed(e.target.value)
-    }
-
-    const handleChange = (e) => {
-        setSpeed(e.target.value)
     }
 
 return (
     <>
+        <h1>Generation: {generation}</h1>
         <button onClick={() => {
             setRunning(!running)
             if (!running) {
@@ -87,9 +105,13 @@ return (
             }}>
             {running ? `Stop` : `Start`}
         </button>
+        <button onClick={Stepper}>
+            One Step
+        </button>
         <button 
         onClick={() => {
             setGrid(clearGrid())
+            setGeneration(0)
             if (running) {
                 setRunning(!running)
             }
@@ -106,15 +128,18 @@ return (
             }
             if (running) {
                 setRunning(!running)
-                setGrid(rows)
-            } else {
-
-            }
+            } 
+            setGeneration(0)
+            setGrid(rows)
         }}>
             Random
         </button>
         <button
         onClick={() => {
+            if (running) {
+                setRunning(!running)
+            }
+            setGeneration(0)
             setGrid(SampleGrid1)
         }}
         >
@@ -125,18 +150,20 @@ return (
             if (running) {
                 setRunning(!running)
             }
+            setGeneration(0)
             setGrid(SampleGrid2)
         }}
         >Windows 7 Logo
         </button>
         <button
         onClick={() => {
+            if (running) {
+                setRunning(!running)
+            }
             setGrid(SampleGrid3)
+            setGeneration(0)
         }}
         >JSX Fragment</button>
-        <form onSubmit={handleSubmit}>
-            Speed in milleseconds: <input type='text' value={speed} onChange={handleChange} />
-        </form>
         <div style={{
             display: `grid`,
             gridTemplateColumns: `repeat(${numCols}, 20px)`
