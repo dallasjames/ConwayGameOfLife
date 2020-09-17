@@ -1,1 +1,18 @@
+div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+}
 
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+}
+
+body {
+    text-align: center;
+    background-color: black;
+    color: white;
+}
